@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -13,9 +14,11 @@ class NewsController extends Controller
      */
     public function index()
     {   
-        $news = News::latest()->paginate(5);
+        $news = News::with('user', 'category')->latest()->paginate(5);
+        $categories = Category::limit(10)->get();
         return Inertia::render('Home', [
-            'news' => $news
+            'news' => $news,
+            'categories' => $categories,
         ]);
     }
 
@@ -24,7 +27,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -38,9 +41,14 @@ class NewsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(News $news)
+    public function show(News $news, $id)
     {
-        //
+        $news = News::with('category', 'user')->findOrFail($id);
+        $categories = Category::limit(10)->get();
+        return Inertia::render('News', [
+            'news' => $news,
+            'categories' => $categories,
+        ]);
     }
 
     /**

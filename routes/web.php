@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -7,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', [NewsController::class, "index"]);
+Route::get('/news/{id}', [NewsController::class, "show"])->name('news.show');
+
+Route::get('/category/{id}', [CategoryController::class, "show"])->name('category.show');
 
 // Route::get('/', function () {
 //     return Inertia::render('Home', [

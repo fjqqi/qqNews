@@ -1,8 +1,12 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
+import NavLink from "@/Components/NavLink";
 import { Link } from "@inertiajs/react";
-import { motion } from "motion/react"
+import { motion } from "motion/react";
 
-export default function GuestLayout({ children }) {
+export default function GuestLayout({ children, categories }) {
+    const capitalizeFirstLetter = str => str[0].toUpperCase() + str.slice(1);
+
+
     return (
         <>
             <div className="flex flex-col">
@@ -53,16 +57,16 @@ export default function GuestLayout({ children }) {
                             </ul>
                         </div>
                         <motion.div
-                         whileHover={{ scale: 1.1 }}
-                         whileTap={{ scale: 0.95 }}
-                         onHoverStart={() => console.log('hover started!')}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
+                            onHoverStart={() => console.log("hover started!")}
                         >
-                        <Link
-                            href={"/"}
-                            className=" text-xl md:text-2xl font-extrabold"
-                        >
-                            qqNews
-                        </Link>
+                            <Link
+                                href={"/"}
+                                className=" text-xl md:text-2xl font-extrabold"
+                            >
+                                qqNews
+                            </Link>
                         </motion.div>
                     </div>
                     <div className="navbar-center hidden lg:flex">
@@ -97,17 +101,18 @@ export default function GuestLayout({ children }) {
                             />
                         </div>
                     </div>
-
-        
                 </div>
 
                 <div className="bg-gray-500 text-white py-2  px-3 font-bold">
-                <ul className="flex gap-10 w-full justify-center">
-    {Array.from({ length: 10 }).map((_, i) => (
-        <li className="" key={i}><Link>Item {i + 1}</Link></li>
-    ))}
-</ul>
+                    <ul className="flex gap-10 w-full justify-center">
+                        {categories.map((category) => (
+                            <Link href={route("category.show", {id: category.id})} key={category.id}>{capitalizeFirstLetter(category.name)}</Link>
+                        ))}
 
+                        {/* {Array.from({ length: 10 }).map((_, i) => (
+                            <p>Test</p>
+                        ))} */}
+                    </ul>
                 </div>
             </div>
             <div className="min-h-screen px-5 pt-5 bg-slate-100 md:px-24 min-w-full">

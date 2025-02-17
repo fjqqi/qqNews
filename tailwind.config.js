@@ -18,5 +18,13 @@ export default {
         },
     },
 
-    plugins: [forms, daisyui],
+    plugins: [
+        require('@tailwindcss/forms'),
+        require('daisyui')
+    ],
+    
+    daisyui: {
+        themes: ["light"], // Only enable light theme
+    },
+    
 };

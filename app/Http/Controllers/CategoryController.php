@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\News;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -34,9 +36,19 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show(Category $category, $id )
     {
-        //
+        $category = Category::findOrFail($id);
+        $categories = Category::limit(10)->get();
+
+        $news = News::where('category_id', $id)->get();
+        
+        return Inertia::render('Category', [
+            'category' => $category,
+            'categories' => $categories,
+            'news' => $news, 
+        ]);
+     
     }
 
     /**
