@@ -10,6 +10,7 @@ use Inertia\Inertia;
 Route::get('/', [NewsController::class, "index"]);
 Route::get('/news/{id}', [NewsController::class, "show"])->name('news.show');
 
+Route::get('/categories', [CategoryController::class, "index"]);
 Route::get('/category/{id}', [CategoryController::class, "show"])->name('category.show');
 
 // Route::get('/', function () {

@@ -16,9 +16,12 @@ class NewsController extends Controller
     {   
         $news = News::with('user', 'category')->latest()->paginate(5);
         $categories = Category::limit(10)->get();
+
+        $headlines = News::with('user', 'category')->limit(5)->get();
         return Inertia::render('Home', [
             'news' => $news,
             'categories' => $categories,
+            'headlines' => $headlines,
         ]);
     }
 

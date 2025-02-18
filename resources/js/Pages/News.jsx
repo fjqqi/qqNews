@@ -3,17 +3,16 @@ import { Head } from '@inertiajs/react';
 import React from 'react';
 
 const News = ({ news, categories }) => {
-  console.log(news)
   return (
-        <GuestLayout categories={categories}>
-      <Head title={news.title}/>
-      <div className="max-w-3xl mx-auto px-6 py-12">
+    <GuestLayout categories={categories}>
+      <Head title={news.title} />
+      <div className="max-w-3xl mx-auto px-6 py-12 bg-base-100 text-base-content shadow-lg rounded-lg">
         {/* Title Section */}
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">{news.title}</h1>
+        <h1 className="text-4xl font-bold mb-4">{news.title}</h1>
 
         {/* Category & Date */}
-        <div className="flex items-center justify-between text-gray-500 text-sm mb-6">
-          <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">
+        <div className="flex items-center justify-between text-sm mb-6">
+          <span className="bg-base-200 text-base-content px-3 py-1 rounded-full">
             {news.category.name}
           </span>
           <span>{new Date(news.created_at).toLocaleDateString()}</span>
@@ -29,13 +28,15 @@ const News = ({ news, categories }) => {
         )}
 
         {/* Content Section */}
-        <div className="prose max-w-none text-gray-700 leading-relaxed">
+        <div className="prose max-w-none leading-relaxed text-base-content">
           <p>{news.content}</p>
         </div>
 
         {/* Author Section */}
-        <div className="mt-10 border-t pt-4 text-gray-500 text-sm">
-          <p>Written by: <span className="font-semibold">{news.user.name}</span></p>
+        <div className="mt-10 border-t pt-4 text-sm text-base-content">
+          <p>
+            Written by: <span className="font-semibold">{news.user.name}</span>
+          </p>
         </div>
       </div>
     </GuestLayout>

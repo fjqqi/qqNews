@@ -14,7 +14,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::limit(10)->get();
+        return Inertia::render('Categories', [
+            'categories' => $categories,
+        ]);
     }
 
     /**
