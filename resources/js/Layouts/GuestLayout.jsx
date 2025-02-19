@@ -19,10 +19,10 @@ export default function GuestLayout({ children, categories }) {
 
     const capitalizeFirstLetter = (str) => str[0].toUpperCase() + str.slice(1);
     const { url } = usePage();
-    console.log(url);
+    // console.log(url);
 
+    //Dark Mode Function
     const [isDarkModeOn, setIsDarkModeOn] = useState(false);
-
     function toggleSwitch() {
         const newTheme = isDarkModeOn ? "light" : "dark";
         setIsDarkModeOn(!isDarkModeOn);
@@ -31,51 +31,55 @@ export default function GuestLayout({ children, categories }) {
         localStorage.setItem("theme", newTheme);
     }
 
+    //Sidebar Function
     const [isSidebar, setIsSidebar] = useState(false);
-
     function toggleSidebar() {
         setIsSidebar(!isSidebar);
     }
 
-    console.log(isSidebar);
     return (
         <>
-            {isSidebar && (
-               <Sidebar/>
-            )}
+            {isSidebar && <Sidebar categories={categories} />}
 
             <div
                 className={`flex flex-col z-10  ${
-                    isSidebar ? "ml-72 md:ml-0 duration-200" : ""
+                    isSidebar ? "ml-72 md:ml-0 duration-500" : ""
                 }`}
             >
                 <div
                     className={`${
-                        isDarkModeOn ? "bg-gray-950" : "bg-white"
+                        isDarkModeOn ? "bg-gray-900" : "bg-white"
                     } navbar md:px-24 md:py-5 `}
                 >
                     <div className="navbar-start">
                         <div className="dropdown">
                             <div
-                                tabIndex={0}
-                                role="button"
-                                className="btn btn-ghost lg:hidden"
+                                className="btn z-50 btn-ghost lg:hidden"
                                 onClick={toggleSidebar}
                             >
-                                <svg
+                                <motion.svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    className="h-5 w-5"
-                                    fill="none"
+                                    className="h-6 w-6"
                                     viewBox="0 0 24 24"
+                                    fill="none"
                                     stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
                                 >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h8m-8 6h16"
+                                    {/* Animate the hamburger menu to close icon */}
+                                    <motion.path
+                                        initial={{
+                                            d: "M4 6h16M4 12h16M4 18h16",
+                                        }}
+                                        animate={{
+                                            d: isSidebar
+                                                ? "M6 18L18 6M6 6l12 12" // Close icon (X)
+                                                : "M4 6h16M4 12h16M4 18h16", // Hamburger menu
+                                        }}
+                                        transition={{ duration: 0.2 }}
                                     />
-                                </svg>
+                                </motion.svg>
                             </div>
                             <ul tabIndex={0}></ul>
                         </div>
@@ -136,9 +140,11 @@ export default function GuestLayout({ children, categories }) {
                             </li>
                         </ul>
                     </div>
-                    <div className={`navbar-end   ${
-                    isSidebar ? "ml-72 md:ml-0 duration-200" : ""
-                }`}>
+                    <div
+                        className={`navbar-end   ${
+                            isSidebar ? "ml-72 md:ml-0 duration-500" : ""
+                        }`}
+                    >
                         <div className="form-control hidden md:flex">
                             <input
                                 type="text"
@@ -196,15 +202,18 @@ export default function GuestLayout({ children, categories }) {
                     </ul>
                 </div>
             </div> */}
+
             <div
                 className={`${isDarkModeOn ? "bg-gray-950 " : "bg-slate-100"} ${
-                    isSidebar ? "ml-72 md:ml-0" : ""
-                } min-h-screen px-5 pt-5  duration-200 md:px-24 min-w-full overflow-hidden`}
+                    isSidebar
+                        ? "ml-72 cursor-not-allowed max-h-screen max-w-screen-md overflow-hidden md:ml-0"
+                        : ""
+                } min-h-screen px-5 pt-5 pb-5  duration-500 md:px-24 min-w-full overflow-hidden`}
             >
-                {children}
+                <div> {children}</div>
             </div>
 
-            <Footer />
+            {!isSidebar && <Footer />}
         </>
     );
 }

@@ -44,7 +44,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $categories = Category::limit(10)->get();
 
-        $news = News::where('category_id', $id)->get();
+        $news = News::with('user', 'category')->where('category_id', $id)->get();
         
         return Inertia::render('Category', [
             'category' => $category,

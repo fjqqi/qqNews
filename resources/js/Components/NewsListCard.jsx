@@ -24,12 +24,12 @@ const isNews = (news) => {
                         </Link>
 
                         <div className="flex flex-col md:flex-row gap-1 md:mt-0 mt-2 md:gap-5 md:items-center text-xs md:text-sm">
-                            <div className="flex items-center gap-2  md:mt-0">
+                            <div className="flex items-center md:gap-2  md:mt-0">
                                 <div className="flex-shrink-0">
                                 <img
                                     // src={data.image}
                                     alt=""
-                                    className="md:h-6 md:w-6 h-4 w-4 rounded-full bg-yellow-300"
+                                    className="md:h-6 md:w-6 h-4 w-4 hidden md:block rounded-full bg-yellow-300"
                                 />
                                 </div>
                                 <p className="">{data.user.name}</p>
