@@ -15,20 +15,20 @@ export const Navbar = ({
             <div
                 className={`${isDarkModeOn ? "bg-gray-900" : "bg-white"} ${
                     isSidebar ? "" : ""
-                } navbar md:px-24 md:py-5`}
+                } navbar  md:px-24 px-4 md:py-5`}
             >
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div
-                            className={`btn z-50 btn-ghost lg:hidden ${
+                            className={` lg:hidden ${
                                 isSidebar ? "" : ""
-                            }`}
+                            } cursor-pointer`}
                             onClick={toggleSidebar}
                         >
                             <motion.svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className={`h-6 w-6 duration-500 z-50 ${
-                                    isSidebar ? "text-red-500" : ""
+                                    isSidebar ? "text-white absolute -top-3" : ""
                                 }`}
                                 viewBox="0 0 24 24"
                                 fill="none"
@@ -68,7 +68,7 @@ export const Navbar = ({
                         <ul tabIndex={0}></ul>
                     </div>
 
-                    <div className={`${isSidebar && 'hidden md:flex'} block duration-300`}>
+                    <div className={`${isSidebar && 'hidden md:flex'} md:ml-0 ml-3 block duration-300`}>
                         <motion.div
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.95 }}

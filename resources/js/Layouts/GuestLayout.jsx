@@ -48,8 +48,16 @@ export default function GuestLayout({ children, categories }) {
                 >
                     <Sidebar categories={categories} />
                 </div>
+{/* 
+                <div 
+    className={`fixed inset-0 bg-black duration-300 z-20 bg-opacity-60 ${isSidebar ? 'block' : 'hidden'}`} 
+    onClick={toggleSidebar} 
+></div> */}
+<div 
+    className={`absolute top-0 right-0 bottom-0 left-0 bg-black z-20 transition-opacity duration-500 ${isSidebar ? 'opacity-60' : 'opacity-0 pointer-events-none'}`} 
+    onClick={toggleSidebar} 
+></div>
 
-                {/* <div className={`fixed inset-0 bg-black z-30 bg-opacity-30 ${isSidebar ? 'block' : 'hidden'}`}></div> */}
 
                 <div
                     className={`${

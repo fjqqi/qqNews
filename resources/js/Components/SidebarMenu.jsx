@@ -16,15 +16,22 @@ export const SidebarMenu = ({ name, hasSubmenu, subMenuContent }) => {
                 className="text-base flex items-center cursor-pointer justify-between pb-2 border-b-2 border-b-base-300"
                 onClick={togleDropdown}
             >
-                <Link href="/" className="font-semibold hover:underline ">
+                {!hasSubmenu && (
+                    <Link href={`/${name}`}  className="font-semibold hover:underline ">
                     {capitalizeFirstLetter(name)}
                 </Link>
+                )}
                 {hasSubmenu && subMenuContent && (
+                   <>
+                    <span className="font-semibold hover:underline ">
+                    {capitalizeFirstLetter(name)}
+                </span>
+                
                     <ChevronDownIcon
                         className={`size-4 duration-300 ${
                             isDropdownMenu && "-rotate-180"
                         }`}
-                    />
+                    /></>
                 )}
             </div>
 

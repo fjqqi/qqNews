@@ -18,7 +18,7 @@ const Sidebar = ({ categories }) => {
 
             <ul className="w-full flex flex-col gap-3  py-4">
                 <li>
-                    <SidebarMenu name="Home" />
+                    <SidebarMenu name="home" />
                 </li>
                 <li>
                     <SidebarMenu
@@ -29,7 +29,7 @@ const Sidebar = ({ categories }) => {
                 </li>
 
                 <li>
-                    <SidebarMenu name="Home" hasSubmenu={true} />
+                    <SidebarMenu name="about"/>
                 </li>
             </ul>
         </div>
