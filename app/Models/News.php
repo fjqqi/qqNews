@@ -9,6 +9,16 @@ class News extends Model
 {
     //
     use HasFactory;
+
+
+    protected $fillable = [
+        'title',
+        'content',
+        'image',
+        'category_id',
+        'user_id',
+    ];
+    
     public function user()
     {
         return $this->belongsTo(User::class);

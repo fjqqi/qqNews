@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\News;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -20,7 +22,11 @@ class PostController extends Controller
         $news = News::with('user', 'category')
             ->when($query, function ($q) use ($query) {
                 $q->where('title', 'like', "%{$query}%")
-                  ->orWhere('content', 'like', "%{$query}%");
+                  ->orWhere('content', 'like', "%{$query}%")
+                  ->orWhereHas('category' , function ($queryBuilder) use ($query) {
+                    $queryBuilder->where('name', 'like', "%{$query}%");
+                    
+                });
             })
             ->latest()
             ->paginate(8)
@@ -37,7 +43,13 @@ class PostController extends Controller
      */
     public function create()
     {
-        
+        $categories = Category::all();
+        $users = User::all();
+    
+        return Inertia::render('Dashboard/Create', [
+            'categories' => $categories,
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -45,7 +57,22 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'category_id' => 'required|exists:categories,id',
+            'user_id' => 'required|exists:users,id',
+        ]);
+    
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('news_images', 'public');
+        }
+    
+        News::create($validated);
+    
+        return redirect()->route('posts')->with('success', 'News created successfully.');
+    
     }
 
     /**

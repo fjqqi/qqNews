@@ -9,12 +9,11 @@ export const SidebarMenu = ({ icon, name, href, hasSubmenu , subMenuOnclick, isS
     const [isActive, setIsActive] = useState(false);
    
     useEffect(() => {
-        // Normalize URLs to ensure they match
-        const currentUrl = url.split('?')[0].replace(/\/$/, ''); // Remove trailing slash and ignore query params
-        const menuHref = href ? `/${href}` : `/${name}`;
-        const normalizedMenuHref = menuHref.replace(/\/$/, ''); // Remove trailing slash
-    
-        setIsActive(currentUrl === normalizedMenuHref);
+        const currentUrl = url.split('?')[0]; // Remove query params
+        const menuHref = `/${href || name}`; // Ensure it starts with `/`
+
+        // Check if the current URL starts with the menuHref
+        setIsActive(currentUrl.startsWith(menuHref));
     }, [url, href, name]);
 
 

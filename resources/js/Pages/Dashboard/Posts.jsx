@@ -4,7 +4,7 @@ import Pagination from "@/Components/Pagination";
 import { SearchForm } from "@/Components/SearchForm";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DashboardLayout from "@/Layouts/DashboardLayout";
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline"; // Import icons
+import { PencilIcon, TrashIcon, PlusIcon } from "@heroicons/react/24/outline"; // Import icons
 import { Head, Link, router, usePage } from "@inertiajs/react";
 import { useState } from "react";
 
@@ -64,6 +64,7 @@ export default function Posts({ news }) {
                 content="Are you sure want to delete this record?"
                 onAction={handleDeleteActionClick}
             />
+            <h2 className="text-xl font-bold mb-4">All News</h2>
 
             <div className="w-full bg-base-100 rounded-md p-4">
                 <div className="pb-4 flex ">
@@ -73,7 +74,7 @@ export default function Posts({ news }) {
                         value={searchQuery}
                         onSubmit={onSubmit}
                     />
-                    <Button text="Add News" link={route("posts.create")} />
+                    <Button text="Add News" link={route("posts.create")} icon={<PlusIcon className="size-5"/>} />
                 </div>
 
                 <div className="overflow-x-auto border-base-200  bg-base-200 rounded-md">
@@ -93,11 +94,13 @@ export default function Posts({ news }) {
                                 <th>Content</th>
                                 <th>Category</th>
                                 <th>Created At</th>
+                                <th>Author</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         {/* Table Body */}
                         <tbody>
+                        {news.data.length > 0 ? <>
                             {news.data.map((item, i) => (
                                 <tr key={item.id} className="hover">
                                     <td>
@@ -121,6 +124,9 @@ export default function Posts({ news }) {
                                         {new Date(
                                             item.created_at
                                         ).toLocaleDateString()}
+                                    </td>
+                                    <td>
+                                        {item.user.name}
                                     </td>
                                     <td>
                                         <div className="flex space-x-2">
@@ -148,6 +154,13 @@ export default function Posts({ news }) {
                                     </td>
                                 </tr>
                             ))}
+                        </> : <>
+                            <tr>
+                            <td colSpan="7" className="text-center py-4 text-gray-500">
+            No record found
+        </td>
+                            </tr>
+                        </>}
                         </tbody>
                     </table>
                 </div>

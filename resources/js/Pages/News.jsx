@@ -21,7 +21,7 @@ const News = ({ news, categories }) => {
         {/* Image Section */}
         {news.image && (
           <img
-            // src={news.image}
+          src={`/${news.image}`} 
             alt={news.title}
             className="w-full h-64 object-cover rounded-lg mb-6 shadow-md"
           />

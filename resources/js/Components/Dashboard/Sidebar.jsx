@@ -12,6 +12,13 @@ import { motion } from "motion/react";
 export const Sidebar = () => {
     const [isSubmenu, setIsSubmenu] = useState(false);
     const { url } = usePage();
+    const [isActiveMenu, setIsActiveMenu] = useState('');
+
+    useEffect(() => {
+        // console.log("Current URL:", url);
+        const currentUrl = url;
+        setIsActiveMenu(currentUrl);
+    }, [url]);
 
     //DarkMode Config
     const [theme, setTheme] = useState("light");
@@ -60,15 +67,16 @@ export const Sidebar = () => {
                         subMenuOnclick={toggleSubmenu}
                         icon={<HeartIcon className="size-5" />}
                         isSubmenu={isSubmenu}
-                        isActive={true}
                     />
                     <SidebarMenu
                         name="profile"
                         icon={<UserIcon className="size-5" />}
+
                     />
                     <SidebarMenu
                         name="posts"
                         icon={<NewspaperIcon className="size-5" />}
+
                     />
                 </div>
                 <div className="p-4 flex items-center justify-between">
