@@ -12,7 +12,6 @@ import { Alert } from "@/Components/Alert";
 export default function DashboardLayout({ header, children }) {
     const user = usePage().props.auth.user;
     const { flash } = usePage().props;
-    console.log(flash)
 
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =

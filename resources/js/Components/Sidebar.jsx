@@ -9,7 +9,7 @@ const Sidebar = ({ categories }) => {
         setIsDropdownMenu((prev) => !prev);
     };
     // console.log(isDropdownMenu);
-    console.log(categories);
+
     return (
         <div className="absolute w-72 md:hidden min-h-screen p-4 bg-base-200 shadow-lg z-40">
             <div className="w-full flex items-center justify-center border-b-2 border-base-300 pb-4">

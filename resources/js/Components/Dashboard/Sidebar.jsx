@@ -12,7 +12,6 @@ import { motion } from "motion/react";
 export const Sidebar = () => {
     const [isSubmenu, setIsSubmenu] = useState(false);
     const { url } = usePage();
-    console.log(url);
 
     //DarkMode Config
     const [theme, setTheme] = useState("light");
@@ -41,7 +40,7 @@ export const Sidebar = () => {
     const toggleSubmenu = () => {
         setIsSubmenu((prevState) => !prevState); // Toggle the state
     };
-    console.log(isSubmenu);
+
     return (
         <>
             <div className="md:-ml-0 -ml-80 w-72 bg-base-300 text-base-content flex flex-col ">

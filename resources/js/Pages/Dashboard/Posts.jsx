@@ -1,5 +1,7 @@
+import { Button } from "@/Components/Dashboard/Button";
 import Modal from "@/Components/Dashboard/Modal";
 import Pagination from "@/Components/Pagination";
+import { SearchForm } from "@/Components/SearchForm";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline"; // Import icons
@@ -13,28 +15,35 @@ export default function Posts({ news }) {
         // Add your edit logic here (e.g., redirect to edit page)
     };
 
-
-
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    const [selectedId, setSelectedId] = useState('')
+    const [selectedId, setSelectedId] = useState("");
 
     // Handle delete action
     const handleDelete = (id) => {
-        setIsDeleteModalOpen(true); 
-        setSelectedId(id); 
+        setIsDeleteModalOpen(true);
+        setSelectedId(id);
     };
 
     const handleClose = () => {
         setIsDeleteModalOpen(false);
-    }
+    };
 
     const handleDeleteActionClick = () => {
         router.delete(`/posts/delete/${selectedId}`, {
             onSuccess: () => {
                 setIsDeleteModalOpen(false); // Close the modal on success
-                setSelectedId(''); // Clear the selected ID
+                setSelectedId(""); // Clear the selected ID
             },
         });
+    };
+
+    //Search Query
+    const { search } = usePage().props; // Assuming Inertia is passing the query
+    const [searchQuery, setSearchQuery] = useState(search || "");
+
+    const onSubmit = (e) => {
+        e.preventDefault(); 
+        router.get('/posts', { search: searchQuery });
     };
 
     return (
@@ -45,9 +54,8 @@ export default function Posts({ news }) {
                 </h2>
             }
         >
-        
-         <Head title="Posts" />
-           
+            <Head title="Posts" />
+
             <Modal
                 title="Delete"
                 isOpen={isDeleteModalOpen}
@@ -55,18 +63,31 @@ export default function Posts({ news }) {
                 actionText="Delete"
                 content="Are you sure want to delete this record?"
                 onAction={handleDeleteActionClick}
-
             />
 
-            
-
-
             <div className="w-full bg-base-100 rounded-md p-4">
-                <div className="overflow-x-auto border-base-200  bg-gray-50 rounded-md">
+                <div className="pb-4 flex ">
+                    <SearchForm
+                        placeholder="Search News"
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        value={searchQuery}
+                        onSubmit={onSubmit}
+                    />
+                    <Button text="Add News" link={route("posts.create")} />
+                </div>
+
+                <div className="overflow-x-auto border-base-200  bg-base-200 rounded-md">
                     <table className="table">
                         {/* Table Head */}
                         <thead>
                             <tr>
+                                <th>
+                                    <input
+                                        type="checkbox"
+                                        disabled
+                                        className="checkbox checkbox-sm"
+                                    />
+                                </th>
                                 <th>#</th>
                                 <th>Title</th>
                                 <th>Content</th>
@@ -78,8 +99,14 @@ export default function Posts({ news }) {
                         {/* Table Body */}
                         <tbody>
                             {news.data.map((item, i) => (
-                                <tr key={item.id}>
-                                    <td>{i+1}</td>
+                                <tr key={item.id} className="hover">
+                                    <td>
+                                        <input
+                                            type="checkbox"
+                                            className="checkbox checkbox-sm"
+                                        />
+                                    </td>
+                                    <td>{i + 1}</td>
                                     <td>{item.title}</td>
                                     <td>
                                         {item.content.length > 50

@@ -12,11 +12,23 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $news = News::with('user', 'category')->latest()->paginate(8);
+        $query = $request->input('search');
+
+        // Build the query with search conditions
+        $news = News::with('user', 'category')
+            ->when($query, function ($q) use ($query) {
+                $q->where('title', 'like', "%{$query}%")
+                  ->orWhere('content', 'like', "%{$query}%");
+            })
+            ->latest()
+            ->paginate(8)
+            ->appends(['search' => $query]); 
+    
         return Inertia::render('Dashboard/Posts', [
-            'news' => $news
+            'news' => $news,
+            'search' => $query
         ]);
     }
 
@@ -25,7 +37,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**

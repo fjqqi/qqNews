@@ -33,6 +33,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/posts', [PostController::class, 'index'])->middleware(['auth', 'verified'])->name('posts');
 Route::delete('/posts/delete/{id}', [PostController::class, 'destroy'])->middleware(['auth', 'verified'])->name('posts.delete');
+Route::get('/posts/create', [PostController::class, 'create'])->middleware(['auth', 'verified'])->name('posts.create');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
